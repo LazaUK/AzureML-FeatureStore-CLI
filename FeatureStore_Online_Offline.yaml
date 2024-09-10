@@ -1,0 +1,32 @@
+$schema: http://azureml/sdk-2-0/FeatureStore.json
+
+# General configuration of Azure ML feature store
+name: feature-store-online-offline
+display_name: "Feature store with both online and offline materialisation"
+resource_group: <rg>
+location: <az-region>
+tags:
+  author: Laziz_Turakulov
+
+# Apache Spark configuration
+compute_runtime:
+  spark_runtime_version: "3.4"
+
+# Details of user-assigned managed identity
+materialization_identity:
+  client_id: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+  principal_id: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+  resource_id: "/subscriptions/<sub-id>/resourceGroups/<rg>/providers/Microsoft.ManagedIdentity/userAssignedIdentities/<mi-name>"
+
+# Details of Azure Redis Cache (online materialisation)
+online_store:
+  type: redis
+  target: "/subscriptions/<sub-id>/resourceGroups/<rg>/providers/Microsoft.Cache/Redis/<redis-name>"
+
+# Details of ADLS Gen2 Storage account (offline materialisation)
+offline_store:
+  type: azure_data_lake_gen2
+  target: "/subscriptions/<sub-id>/resourceGroups/<rg>/providers/Microsoft.Storage/storageAccounts/<storage_name>/blobServices/default/containers/<container_name>"
+  
+# Details of default Storage account
+storage_account: "/subscriptions/<sub-id>/resourceGroups/<rg>/providers/Microsoft.Storage/storageAccounts/<storage_name>"
