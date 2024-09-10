@@ -6,7 +6,7 @@ This tutorial will explain how to setup online and offline feature stores in Azu
 
 ## Table of contents:
 - [Step 1: Installing Az CLI's ML extension](https://github.com/LazaUK/AzureML-FeatureStore-CLI#step-1-installing-az-clis-ml-extension)
-- [Step 2: Creating ADLS Gen2 storage account]()
+- [Step 2: Creating ADLS Gen2 storage account](https://github.com/LazaUK/AzureML-FeatureStore-CLI#step-2-creating-adls-gen2-storage-account)
 - [Step 3: Creating container on ADLS Gen2 storage]()
 - [Step 4: Creating Redis Cache instance]()
 - [Step 5: Creating user-assigned Managed Identity]()
@@ -20,3 +20,16 @@ az extension add --name ml
 ```
 
 ## Step 2: Creating ADLS Gen2 storage account
+Now create an ADLS Gen2 account, that will be used as a default storage account by your feature store:
+``` Bash
+az storage account create --name <STORAGE_ACCOUNT_NAME> --enable-hierarchical-namespace true --resource-group <RESOURCE_GROUP_NAME> --location <AZ_REGION> --subscription <AZ_SUBSCRIPTION_ID>
+```
+> Note: Replace ```<STORAGE_ACCOUNT_NAME>```, ```<RESOURCE_GROUP_NAME>```, ```<AZ_REGION>``` and ```<AZ_SUBSCRIPTION_ID>``` with required Storage account values.
+
+## Step 3: Creating container on ADLS Gen2 storage
+Once you created a Storage account, you can setup a blob container that will be used by the feature store for offline materialisation:
+``` Bash
+az storage fs create --name <STORAGE_CONTAINER_NAME> --account-name <STORAGE_ACCOUNT_NAME> --subscription <AZ_SUBSCRIPTION_ID> --connection-string <CONNECTION_STRING>
+```
+> Note: Replace ```<STORAGE_CONTAINER_NAME>```, ```<STORAGE_ACCOUNT_NAME>```, ```<CONNECTION_STRING>``` and ```<AZ_SUBSCRIPTION_ID>``` with required Storage account's container values.
+
