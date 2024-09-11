@@ -8,9 +8,9 @@ This tutorial will explain how to setup online and offline feature stores in Azu
 - [Step 1: Installing Az CLI's ML extension](https://github.com/LazaUK/AzureML-FeatureStore-CLI#step-1-installing-az-clis-ml-extension)
 - [Step 2: Creating ADLS Gen2 storage account](https://github.com/LazaUK/AzureML-FeatureStore-CLI#step-2-creating-adls-gen2-storage-account)
 - [Step 3: Creating container on ADLS Gen2 storage](https://github.com/LazaUK/AzureML-FeatureStore-CLI#step-3-creating-container-on-adls-gen2-storage)
-- [Step 4: Creating Redis Cache instance]()
-- [Step 5: Creating user-assigned Managed Identity]()
-- [Step 6: Creating Azure ML feature store]()
+- [Step 4: Creating Redis Cache instance](https://github.com/LazaUK/AzureML-FeatureStore-CLI#step-4-creating-redis-cache-instance)
+- [Step 5: Creating user-assigned Managed Identity](https://github.com/LazaUK/AzureML-FeatureStore-CLI#step-5-creating-user-assigned-managed-identity)
+- [Step 6: Creating Azure ML feature store](https://github.com/LazaUK/AzureML-FeatureStore-CLI#step-6-creating-azure-ml-feature-store)
 - [HOUSEKEEPING: Deleting feature store]()
 
 ## Step 1: Installing Az CLI's ML extension
@@ -91,4 +91,10 @@ az ml feature-store create --resource-group <RESOURCE_GROUP_NAME> --file Feature
 ```
 3. If successful, you should find new feature store in the UI of Azure ML Studio.
 ![AzureML_FeatureStore_Home](images/AzureML_FeatureStore_Home.png)
-4. 
+4. You can also find that your managed identity got 4 roles assigned:
+- ```AzureML Data Scientist``` to Azure ML feature store,
+- ```Storage Blob Data Contributor``` to default Storage account,
+- ```Storage Blob Data Contributor``` to offline store's Blob container,
+- ```Contributor``` to online store's Redis Cache resource.
+![AzureML_FeatureStore_MI](images/AzureML_FeatureStore_MI.png)
+5. 
