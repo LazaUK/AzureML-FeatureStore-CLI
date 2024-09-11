@@ -1,8 +1,12 @@
 # Azure Machine Learning - Feature Store (CLI Setup)
 
-**_Feature Store_** in Azure Machine Learning (Azure ML) is a centralised repository for storing, managing and retrieving features used by ML models. It simplifies feature engineering through scalable and efficient way to reuse features across multiple projects.
+Ready to boost your machine learning projects? Azure Machine Learning (Azure ML) offers a centralised repository called _**Feature Store**_ to simplify feature engineering. It lets you store, manage and efficiently reuse features across projects, saving time and efforts.
 
-This tutorial will explain how to setup online and offline feature stores in Azure ML, using Azure command-line interface (Az CLI). Online materialisation is enabled by in-memory key/value management in _Azure Redis Cache_, while offline materialisation utilises _ADLS Gen2_ (Azure Data Lake Storage - 2nd Generation) account.
+This guide will show you how to set up an Azure ML Feature Store with online and offline materialisation using the **Azure CLI** (Az CLI). Online store is powered by in-memory capacity of _Azure Redis Cache_, while offline store utilises 2nd generation of Azure Data Lake Store (_ADLS Gen2_).
+
+Here's what you'll need:
+- An Azure subscription,
+- Az CLI installed (we'll cover its extension installation in the first step).
 
 ## Table of contents:
 - [Step 1: Installing Az CLI's ML extension](https://github.com/LazaUK/AzureML-FeatureStore-CLI#step-1-installing-az-clis-ml-extension)
@@ -27,21 +31,21 @@ az storage account create --name <STORAGE_ACCOUNT_NAME> --enable-hierarchical-na
 > Note: Replace ```<STORAGE_ACCOUNT_NAME>```, ```<RESOURCE_GROUP_NAME>```, ```<AZ_REGION>``` and ```<AZ_SUBSCRIPTION_ID>``` with required Storage account values.
 
 ## Step 3: Creating container on ADLS Gen2 storage
-Once you created a Storage account, you can setup a blob container that will be used by the feature store for offline materialisation:
+Once you created Storage account, you can setup a blob container that will be used by the feature store for offline materialisation:
 ``` Bash
 az storage fs create --name <STORAGE_CONTAINER_NAME> --account-name <STORAGE_ACCOUNT_NAME> --subscription <AZ_SUBSCRIPTION_ID> --connection-string <CONNECTION_STRING>
 ```
 > Note: Replace ```<STORAGE_CONTAINER_NAME>```, ```<STORAGE_ACCOUNT_NAME>```, ```<CONNECTION_STRING>``` and ```<AZ_SUBSCRIPTION_ID>``` with required Storage account's container values.
 
 ## Step 4: Creating Redis Cache instance
-If you want to provide your ML experiments with low latency access to feature sets, you can provision Azure Redis Cache resource for online materialisation:
+If you want your ML models to access features with low latency, create a Redis Cache instance for online materialisation:
 ``` Bash
 az redis create --name <REDIS_CACHE_NAME> --resource-group <RESOURCE_GROUP_NAME> --location <AZ_REGION> --sku <REDIS_CACHE_SKU_TIER> --vm-size <REDIS_CACHE_SKU_FAMILY>
 ```
 > Note: Replace ```<REDIS_CACHE_NAME>```, ```<RESOURCE_GROUP_NAME>```, ```<AZ_REGION>```, ```<REDIS_CACHE_SKU_TIER>``` and ```<REDIS_CACHE_SKU_FAMILY>``` with required Redis Cache resource's values.
 
 ## Step 5: Creating user-assigned Managed Identity
-During feature store's deployment, Azure will auto-generate a user-assigned managed identity and assign it with access to its resources. Alternatively, you can pre-provision your own managed identity, e.g to follow corporate naming convention:
+Azure can automatically create a managed identity for your feature store. Alternatively, you can pre-provision your own, e.g to follow corporate naming convention:
 ```
 az identity create --name <MI_NAME> --resource-group <RESOURCE_GROUP_NAME> --location <AZ_REGION> --subscription <AZ_SUBSCRIPTION_ID>
 ```
@@ -50,7 +54,7 @@ az identity create --name <MI_NAME> --resource-group <RESOURCE_GROUP_NAME> --loc
 ## Step 6: Creating Azure ML feature store
 Last step in the process is create the feature store itself.
 
-1. First of all, you need to update provided [YAML template](./FeatureStore_Online_Offline.yaml) with details of your Storage, Redis Cache and managed identity resources:
+1. Download provided [YAML template](./FeatureStore_Online_Offline.yaml) and update it with details from your previous steps (storage, Redis Cache and managed identity):
 ``` YAML
 $schema: http://azureml/sdk-2-0/FeatureStore.json
 
@@ -85,7 +89,7 @@ offline_store:
 # Details of default Storage account
 storage_account: "/subscriptions/<sub-id>/resourceGroups/<rg>/providers/Microsoft.Storage/storageAccounts/<storage_name>"
 ```
-2. Then execute Az CLI command, to start provisioning process in the target Resource Group:
+2. Then execute Az CLI command, to provision the feature store:
 ``` Bash
 az ml feature-store create --resource-group <RESOURCE_GROUP_NAME> --file FeatureStore_Online_Offline.yaml
 ```
