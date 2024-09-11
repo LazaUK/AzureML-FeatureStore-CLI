@@ -97,4 +97,9 @@ az ml feature-store create --resource-group <RESOURCE_GROUP_NAME> --file Feature
 - ```Storage Blob Data Contributor``` to offline store's Blob container,
 - ```Contributor``` to online store's Redis Cache resource.
 ![AzureML_FeatureStore_MI](images/AzureML_FeatureStore_MI.png)
-5. 
+
+## HOUSEKEEPING: Deleting feature store
+Currently, Azure ML Studio's UI doesn't support deletion of feature stores. To delete feature store, you can execute the following Az CLI command:
+``` Bash
+az ml feature-store delete --name <FEATURE_STORE_NAME> --resource-group <RESOURCE_GROUP_NAME> --all-resources
+```
