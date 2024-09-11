@@ -11,7 +11,7 @@ This tutorial will explain how to setup online and offline feature stores in Azu
 - [Step 4: Creating Redis Cache instance](https://github.com/LazaUK/AzureML-FeatureStore-CLI#step-4-creating-redis-cache-instance)
 - [Step 5: Creating user-assigned Managed Identity](https://github.com/LazaUK/AzureML-FeatureStore-CLI#step-5-creating-user-assigned-managed-identity)
 - [Step 6: Creating Azure ML feature store](https://github.com/LazaUK/AzureML-FeatureStore-CLI#step-6-creating-azure-ml-feature-store)
-- [HOUSEKEEPING: Deleting feature store]()
+- [HOUSEKEEPING: Deleting feature store](https://github.com/LazaUK/AzureML-FeatureStore-CLI#housekeeping-deleting-feature-store)
 
 ## Step 1: Installing Az CLI's ML extension
 To interact with Azure ML through Az CLI, you need to install ML extension:
