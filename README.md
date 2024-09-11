@@ -89,4 +89,6 @@ storage_account: "/subscriptions/<sub-id>/resourceGroups/<rg>/providers/Microsof
 ``` Bash
 az ml feature-store create --resource-group <RESOURCE_GROUP_NAME> --file FeatureStore_Online_Offline.yaml
 ```
-3. 
+3. If successful, you should find new feature store in the UI of Azure ML Studio.
+![AzureML_FeatureStore_Home](AzureML_FeatureStore_Home.png)
+4. 
